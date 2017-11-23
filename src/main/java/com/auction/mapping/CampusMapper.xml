@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.CampusMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.Campus">
+    <id column="campus_id" jdbcType="INTEGER" property="campusId" />
+    <result column="campus_name" jdbcType="VARCHAR" property="campusName" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="custom_service" jdbcType="VARCHAR" property="customService" />
+    <result column="home_page" jdbcType="VARCHAR" property="homePage" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="app_secret" jdbcType="VARCHAR" property="appSecret" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    campus_id, campus_name, city_id, custom_service, home_page, app_id, app_secret, access_token
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from campus
+    where campus_id = #{campusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from campus
+    where campus_id = #{campusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.auction.domain.Campus">
+    insert into campus (campus_id, campus_name, city_id, 
+      custom_service, home_page, app_id, 
+      app_secret, access_token)
+    values (#{campusId,jdbcType=INTEGER}, #{campusName,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{customService,jdbcType=VARCHAR}, #{homePage,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{appSecret,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.auction.domain.Campus">
+    insert into campus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="campusId != null">
+        campus_id,
+      </if>
+      <if test="campusName != null">
+        campus_name,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="customService != null">
+        custom_service,
+      </if>
+      <if test="homePage != null">
+        home_page,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appSecret != null">
+        app_secret,
+      </if>
+      <if test="accessToken != null">
+        access_token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="campusId != null">
+        #{campusId,jdbcType=INTEGER},
+      </if>
+      <if test="campusName != null">
+        #{campusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="customService != null">
+        #{customService,jdbcType=VARCHAR},
+      </if>
+      <if test="homePage != null">
+        #{homePage,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.Campus">
+    update campus
+    <set>
+      <if test="campusName != null">
+        campus_name = #{campusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="customService != null">
+        custom_service = #{customService,jdbcType=VARCHAR},
+      </if>
+      <if test="homePage != null">
+        home_page = #{homePage,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where campus_id = #{campusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.Campus">
+    update campus
+    set campus_name = #{campusName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      custom_service = #{customService,jdbcType=VARCHAR},
+      home_page = #{homePage,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      access_token = #{accessToken,jdbcType=VARCHAR}
+    where campus_id = #{campusId,jdbcType=INTEGER}
+  </update>
+</mapper>

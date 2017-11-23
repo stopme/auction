@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="campus_id" jdbcType="INTEGER" property="campusId" />
+    <result column="food_id" jdbcType="BIGINT" property="foodId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="consume_time" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="pay_state" jdbcType="SMALLINT" property="payState" />
+    <result column="consume" jdbcType="REAL" property="consume" />
+    <result column="used" jdbcType="SMALLINT" property="used" />
+    <result column="use_type" jdbcType="SMALLINT" property="useType" />
+    <result column="settle" jdbcType="SMALLINT" property="settle" />
+    <result column="settle_status" jdbcType="SMALLINT" property="settleStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, open_id, campus_id, food_id, amount, create_time, consume_time, pay_state, consume, 
+    used, use_type, settle, settle_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.auction.domain.Order">
+    insert into orders (id, open_id, campus_id, 
+      food_id, amount, create_time, 
+      consume_time, pay_state, consume, 
+      used, use_type, settle, 
+      settle_status)
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{campusId,jdbcType=INTEGER}, 
+      #{foodId,jdbcType=BIGINT}, #{amount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{consumeTime,jdbcType=TIMESTAMP}, #{payState,jdbcType=SMALLINT}, #{consume,jdbcType=REAL}, 
+      #{used,jdbcType=SMALLINT}, #{useType,jdbcType=SMALLINT}, #{settle,jdbcType=SMALLINT}, 
+      #{settleStatus,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.auction.domain.Order">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="campusId != null">
+        campus_id,
+      </if>
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="consumeTime != null">
+        consume_time,
+      </if>
+      <if test="payState != null">
+        pay_state,
+      </if>
+      <if test="consume != null">
+        consume,
+      </if>
+      <if test="used != null">
+        used,
+      </if>
+      <if test="useType != null">
+        use_type,
+      </if>
+      <if test="settle != null">
+        settle,
+      </if>
+      <if test="settleStatus != null">
+        settle_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="campusId != null">
+        #{campusId,jdbcType=INTEGER},
+      </if>
+      <if test="foodId != null">
+        #{foodId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payState != null">
+        #{payState,jdbcType=SMALLINT},
+      </if>
+      <if test="consume != null">
+        #{consume,jdbcType=REAL},
+      </if>
+      <if test="used != null">
+        #{used,jdbcType=SMALLINT},
+      </if>
+      <if test="useType != null">
+        #{useType,jdbcType=SMALLINT},
+      </if>
+      <if test="settle != null">
+        #{settle,jdbcType=SMALLINT},
+      </if>
+      <if test="settleStatus != null">
+        #{settleStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.Order">
+    update orders
+    <set>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="campusId != null">
+        campus_id = #{campusId,jdbcType=INTEGER},
+      </if>
+      <if test="foodId != null">
+        food_id = #{foodId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null">
+        consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payState != null">
+        pay_state = #{payState,jdbcType=SMALLINT},
+      </if>
+      <if test="consume != null">
+        consume = #{consume,jdbcType=REAL},
+      </if>
+      <if test="used != null">
+        used = #{used,jdbcType=SMALLINT},
+      </if>
+      <if test="useType != null">
+        use_type = #{useType,jdbcType=SMALLINT},
+      </if>
+      <if test="settle != null">
+        settle = #{settle,jdbcType=SMALLINT},
+      </if>
+      <if test="settleStatus != null">
+        settle_status = #{settleStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.Order">
+    update orders
+    set open_id = #{openId,jdbcType=VARCHAR},
+      campus_id = #{campusId,jdbcType=INTEGER},
+      food_id = #{foodId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      pay_state = #{payState,jdbcType=SMALLINT},
+      consume = #{consume,jdbcType=REAL},
+      used = #{used,jdbcType=SMALLINT},
+      use_type = #{useType,jdbcType=SMALLINT},
+      settle = #{settle,jdbcType=SMALLINT},
+      settle_status = #{settleStatus,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
