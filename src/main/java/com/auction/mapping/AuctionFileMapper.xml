@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.AuctionFileMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.AuctionFile">
+    <id column="file_id" jdbcType="INTEGER" property="fileId" />
+    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+    <result column="image_stay" jdbcType="TINYINT" property="imageStay" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    file_id, file_path, image_stay, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auction_file
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from auction_file
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="fileId"   parameterType="com.auction.domain.AuctionFile">
+    insert into auction_file (file_id, file_path, image_stay, 
+      create_time, update_time)
+    values (#{fileId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, #{imageStay,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="fileId"   parameterType="com.auction.domain.AuctionFile">
+    insert into auction_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="filePath != null">
+        file_path,
+      </if>
+      <if test="imageStay != null">
+        image_stay,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="imageStay != null">
+        #{imageStay,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.AuctionFile">
+    update auction_file
+    <set>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="imageStay != null">
+        image_stay = #{imageStay,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.AuctionFile">
+    update auction_file
+    set file_path = #{filePath,jdbcType=VARCHAR},
+      image_stay = #{imageStay,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+</mapper>

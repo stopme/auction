@@ -1,20 +1,22 @@
 package com.auction.service;
 
+import com.auction.dao.ConfigMapper;
 import com.auction.dao.OrderMapper;
+import com.auction.domain.Config;
 import com.auction.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrderService {
+public class ConfigService {
 
     @Autowired
-    OrderMapper orderMapper;
+    ConfigMapper configMapper;
 
 
     
-    public Order getOrder(int id) {
-        return orderMapper.selectByPrimaryKey(id);
+    public Config getConfig(String configKey) {
+        return configMapper.selectByConfigKey(configKey);
     }
 
 }

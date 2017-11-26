@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.Banner">
+    <id column="banner_id" jdbcType="INTEGER" property="bannerId" />
+    <result column="banner_name" jdbcType="VARCHAR" property="bannerName" />
+    <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl" />
+    <result column="banner_desc" jdbcType="VARCHAR" property="bannerDesc" />
+    <result column="banner_page" jdbcType="TINYINT" property="bannerPage" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    banner_id, banner_name, banner_url, banner_desc, banner_page, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+    where banner_id = #{bannerId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPageIndex" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from banner
+    where banner_page= #{pageIndex,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from banner
+    where banner_id = #{bannerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.auction.domain.Banner">
+    insert into banner (banner_id, banner_name, banner_url, 
+      banner_desc, banner_page, create_time, 
+      update_time)
+    values (#{bannerId,jdbcType=INTEGER}, #{bannerName,jdbcType=VARCHAR}, #{bannerUrl,jdbcType=VARCHAR}, 
+      #{bannerDesc,jdbcType=VARCHAR}, #{bannerPage,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.auction.domain.Banner">
+    insert into banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bannerId != null">
+        banner_id,
+      </if>
+      <if test="bannerName != null">
+        banner_name,
+      </if>
+      <if test="bannerUrl != null">
+        banner_url,
+      </if>
+      <if test="bannerDesc != null">
+        banner_desc,
+      </if>
+      <if test="bannerPage != null">
+        banner_page,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bannerId != null">
+        #{bannerId,jdbcType=INTEGER},
+      </if>
+      <if test="bannerName != null">
+        #{bannerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null">
+        #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerDesc != null">
+        #{bannerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerPage != null">
+        #{bannerPage,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.Banner">
+    update banner
+    <set>
+      <if test="bannerName != null">
+        banner_name = #{bannerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null">
+        banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerDesc != null">
+        banner_desc = #{bannerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerPage != null">
+        banner_page = #{bannerPage,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where banner_id = #{bannerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.Banner">
+    update banner
+    set banner_name = #{bannerName,jdbcType=VARCHAR},
+      banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      banner_desc = #{bannerDesc,jdbcType=VARCHAR},
+      banner_page = #{bannerPage,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where banner_id = #{bannerId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

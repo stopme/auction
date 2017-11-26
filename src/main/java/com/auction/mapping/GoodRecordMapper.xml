@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.GoodRecordMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.GoodRecord">
+    <id column="record_id" jdbcType="INTEGER" property="recordId" />
+    <result column="good_id" jdbcType="INTEGER" property="goodId" />
+    <result column="watch_time" jdbcType="INTEGER" property="watchTime" />
+    <result column="jingpai_time" jdbcType="INTEGER" property="jingpaiTime" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    record_id, good_id, watch_time, jingpai_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from good_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from good_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.auction.domain.GoodRecord">
+    insert into good_record (record_id, good_id, watch_time, 
+      jingpai_time, create_time, update_time
+      )
+    values (#{recordId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{watchTime,jdbcType=INTEGER}, 
+      #{jingpaiTime,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.auction.domain.GoodRecord">
+    insert into good_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="goodId != null">
+        good_id,
+      </if>
+      <if test="watchTime != null">
+        watch_time,
+      </if>
+      <if test="jingpaiTime != null">
+        jingpai_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null">
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="watchTime != null">
+        #{watchTime,jdbcType=INTEGER},
+      </if>
+      <if test="jingpaiTime != null">
+        #{jingpaiTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.GoodRecord">
+    update good_record
+    <set>
+      <if test="goodId != null">
+        good_id = #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="watchTime != null">
+        watch_time = #{watchTime,jdbcType=INTEGER},
+      </if>
+      <if test="jingpaiTime != null">
+        jingpai_time = #{jingpaiTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.GoodRecord">
+    update good_record
+    set good_id = #{goodId,jdbcType=INTEGER},
+      watch_time = #{watchTime,jdbcType=INTEGER},
+      jingpai_time = #{jingpaiTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+</mapper>

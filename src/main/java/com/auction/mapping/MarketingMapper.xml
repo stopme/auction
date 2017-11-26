@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.MarketingMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.Marketing">
+    <id column="market_id" jdbcType="INTEGER" property="marketId" />
+    <result column="market_name" jdbcType="VARCHAR" property="marketName" />
+    <result column="market_type" jdbcType="VARCHAR" property="marketType" />
+    <result column="start_time" jdbcType="BIGINT" property="startTime" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    market_id, market_name, market_type, start_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from marketing
+    where market_id = #{marketId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByStartTime" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from marketing
+    where start_time = #{startTime,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from marketing
+    where market_id = #{marketId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="goodId"  parameterType="com.auction.domain.Marketing">
+    insert into marketing (market_id, market_name, market_type, 
+      start_time, create_time, update_time
+      )
+    values (#{marketId,jdbcType=INTEGER}, #{marketName,jdbcType=VARCHAR}, #{marketType,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="goodId"  parameterType="com.auction.domain.Marketing">
+    insert into marketing
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="marketId != null">
+        market_id,
+      </if>
+      <if test="marketName != null">
+        market_name,
+      </if>
+      <if test="marketType != null">
+        market_type,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="marketId != null">
+        #{marketId,jdbcType=INTEGER},
+      </if>
+      <if test="marketName != null">
+        #{marketName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketType != null">
+        #{marketType,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.Marketing">
+    update marketing
+    <set>
+      <if test="marketName != null">
+        market_name = #{marketName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketType != null">
+        market_type = #{marketType,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where market_id = #{marketId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.Marketing">
+    update marketing
+    set market_name = #{marketName,jdbcType=VARCHAR},
+      market_type = #{marketType,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where market_id = #{marketId,jdbcType=INTEGER}
+  </update>
+</mapper>

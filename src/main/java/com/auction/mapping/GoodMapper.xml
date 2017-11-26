@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.GoodMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.Good">
+    <id column="good_id" jdbcType="INTEGER" property="goodId" />
+    <result column="good_name" jdbcType="VARCHAR" property="goodName" />
+    <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
+    <result column="good_tag" jdbcType="VARCHAR" property="goodTag" />
+    <result column="miaosha_price" jdbcType="INTEGER" property="miaoshaPrice" />
+    <result column="good_detail" jdbcType="VARCHAR" property="goodDetail" />
+    <result column="good_sort" jdbcType="INTEGER" property="goodSort" />
+    <result column="sale_price" jdbcType="INTEGER" property="salePrice" />
+    <result column="good_used" jdbcType="TINYINT" property="goodUsed" />
+    <result column="good_status" jdbcType="TINYINT" property="goodStatus" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    good_id, good_name, good_code, good_tag, miaosha_price, good_detail, good_sort, sale_price, 
+    good_used, good_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from good
+    where good_id = #{goodId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="getGoodListByMarketingId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+     g.good_id,  g.good_name,  g.good_code,  g.good_tag,  g.miaosha_price,  g.good_detail,  g.good_sort,  g.sale_price,
+     g.good_used,  g.good_status,  g.create_time,  g.update_time
+    from good g, marketing_good m
+    where g.good_id = m.good_id AND m.market_id=#{marketingId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAllGoods" parameterType="com.auction.util.Pager" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where good_used=0
+    limit #{currentRow,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="getGoodCount"  resultType="java.lang.Integer">
+    select
+    count(*)
+    from good
+    where good_used=0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from good
+    where good_id = #{goodId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="goodId"  parameterType="com.auction.domain.Good">
+    insert into good (good_id, good_name, good_code, 
+      good_tag, miaosha_price, good_detail, 
+      good_sort, sale_price, good_used, 
+      good_status, create_time, update_time
+      )
+    values (#{goodId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR}, #{goodCode,jdbcType=VARCHAR}, 
+      #{goodTag,jdbcType=VARCHAR}, #{miaoshaPrice,jdbcType=INTEGER}, #{goodDetail,jdbcType=VARCHAR}, 
+      #{goodSort,jdbcType=INTEGER}, #{salePrice,jdbcType=INTEGER}, #{goodUsed,jdbcType=TINYINT}, 
+      #{goodStatus,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="goodId"  parameterType="com.auction.domain.Good">
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodId != null">
+        good_id,
+      </if>
+      <if test="goodName != null">
+        good_name,
+      </if>
+      <if test="goodCode != null">
+        good_code,
+      </if>
+      <if test="goodTag != null">
+        good_tag,
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price,
+      </if>
+      <if test="goodDetail != null">
+        good_detail,
+      </if>
+      <if test="goodSort != null">
+        good_sort,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="goodUsed != null">
+        good_used,
+      </if>
+      <if test="goodStatus != null">
+        good_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodId != null">
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="goodName != null">
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodCode != null">
+        #{goodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTag != null">
+        #{goodTag,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshaPrice != null">
+        #{miaoshaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodDetail != null">
+        #{goodDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodSort != null">
+        #{goodSort,jdbcType=INTEGER},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodUsed != null">
+        #{goodUsed,jdbcType=TINYINT},
+      </if>
+      <if test="goodStatus != null">
+        #{goodStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.Good">
+    update good
+    <set>
+      <if test="goodName != null">
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodCode != null">
+        good_code = #{goodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodTag != null">
+        good_tag = #{goodTag,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price = #{miaoshaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodDetail != null">
+        good_detail = #{goodDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodSort != null">
+        good_sort = #{goodSort,jdbcType=INTEGER},
+      </if>
+      <if test="salePrice != null">
+        sale_price = #{salePrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodUsed != null">
+        good_used = #{goodUsed,jdbcType=TINYINT},
+      </if>
+      <if test="goodStatus != null">
+        good_status = #{goodStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where good_id = #{goodId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.Good">
+    update good
+    set good_name = #{goodName,jdbcType=VARCHAR},
+      good_code = #{goodCode,jdbcType=VARCHAR},
+      good_tag = #{goodTag,jdbcType=VARCHAR},
+      miaosha_price = #{miaoshaPrice,jdbcType=INTEGER},
+      good_detail = #{goodDetail,jdbcType=VARCHAR},
+      good_sort = #{goodSort,jdbcType=INTEGER},
+      sale_price = #{salePrice,jdbcType=INTEGER},
+      good_used = #{goodUsed,jdbcType=TINYINT},
+      good_status = #{goodStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where good_id = #{goodId,jdbcType=INTEGER}
+  </update>
+</mapper>

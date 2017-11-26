@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.HeaderTagMapper">
+  <resultMap id="BaseResultMap" type="com.auction.domain.HeaderTag">
+    <id column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <result column="tag_type" jdbcType="VARCHAR" property="tagType" />
+    <result column="tag_sort" jdbcType="INTEGER" property="tagSort" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tag_id, tag_name, tag_type, tag_sort, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from header_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllUsedTag"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from header_tag
+    where tag_used = 1 ORDER BY tag_sort
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from header_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.auction.domain.HeaderTag">
+    insert into header_tag (tag_id, tag_name, tag_type, 
+      tag_sort, create_time, update_time
+      )
+    values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagType,jdbcType=VARCHAR}, 
+      #{tagSort,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.auction.domain.HeaderTag">
+    insert into header_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        tag_id,
+      </if>
+      <if test="tagName != null">
+        tag_name,
+      </if>
+      <if test="tagType != null">
+        tag_type,
+      </if>
+      <if test="tagSort != null">
+        tag_sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagType != null">
+        #{tagType,jdbcType=VARCHAR},
+      </if>
+      <if test="tagSort != null">
+        #{tagSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auction.domain.HeaderTag">
+    update header_tag
+    <set>
+      <if test="tagName != null">
+        tag_name = #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagType != null">
+        tag_type = #{tagType,jdbcType=VARCHAR},
+      </if>
+      <if test="tagSort != null">
+        tag_sort = #{tagSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auction.domain.HeaderTag">
+    update header_tag
+    set tag_name = #{tagName,jdbcType=VARCHAR},
+      tag_type = #{tagType,jdbcType=VARCHAR},
+      tag_sort = #{tagSort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+</mapper>
